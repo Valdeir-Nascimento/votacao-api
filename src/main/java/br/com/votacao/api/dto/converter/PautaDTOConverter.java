@@ -19,6 +19,10 @@ public class PautaDTOConverter {
         return mapper.map(pauta, PautaDTO.class);
     }
 
+    public Pauta to(PautaDTO pautaDTO) {
+        return mapper.map(pautaDTO, Pauta.class);
+    }
+
     public List<PautaDTO> toList(List<Pauta> pautas) {
         return pautas.stream()
                 .map(this::to)
