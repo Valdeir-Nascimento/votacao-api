@@ -17,6 +17,7 @@
         <java.version>11</java.version>
         <modelmapper.version>2.3.0</modelmapper.version>
         <springfox.version>2.9.2</springfox.version>
+        <flywaycore.version>5.2.4</flywaycore.version>
     </properties>
     <dependencies>
         <dependency>
@@ -60,9 +61,8 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>5.2.4</version>
+            <version>${flywaycore.version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
