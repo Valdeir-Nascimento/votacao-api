@@ -2,6 +2,7 @@ package br.com.votacao.api.service;
 
 import br.com.votacao.api.dto.StatusCpfDTO;
 import br.com.votacao.api.exception.*;
+import br.com.votacao.api.model.Pauta;
 import br.com.votacao.api.model.Sessao;
 import br.com.votacao.api.model.Voto;
 import br.com.votacao.api.repository.VotoRepository;
@@ -22,10 +23,8 @@ public class VotoService {
 
     @Autowired
     private VotoRepository votoRepository;
-
     @Autowired
     private SessaoService sessaoService;
-
     @Autowired
     private RestTemplate restTemplate;
 
@@ -34,6 +33,12 @@ public class VotoService {
 
     public List<Voto> listar() {
         return votoRepository.findAll();
+    }
+
+    public Voto buscar(Long idVoto) {
+        return votoRepository
+                .findById(idVoto)
+                .orElseThrow(() -> new PautaNaoEncontradaException(idVoto));
     }
 
     public List<Voto> buscarVotosPorPauta(Long id) {
