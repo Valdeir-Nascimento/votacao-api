@@ -5,16 +5,14 @@ import br.com.votacao.api.dto.converter.SessaoDTOConverter;
 import br.com.votacao.api.model.Sessao;
 import br.com.votacao.api.service.SessaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/sessoes")
+@RequestMapping(value = "/v1/pautas/")
 public class SessaoController {
 
     @Autowired
@@ -22,7 +20,7 @@ public class SessaoController {
     @Autowired
     private SessaoDTOConverter sessaoDTOConverter;
 
-    @GetMapping
+    @GetMapping("/sessoes")
     public ResponseEntity<List<SessaoDTO>> findAll() {
         List<Sessao> sessaoList = sessaoService.listar();
         return ResponseEntity.ok().body(sessaoDTOConverter.toList(sessaoList));
@@ -32,6 +30,12 @@ public class SessaoController {
     public ResponseEntity<SessaoDTO> findById(@PathVariable Long idSessao) {
         Sessao sessao = sessaoService.buscar(idSessao);
         return ResponseEntity.ok().body(sessaoDTOConverter.to(sessao));
+    }
+
+    @DeleteMapping("/sessoes/{idSessao}")
+    @ResponseStatus(HttpStatus.OK)
+    public void excluir(@PathVariable Long idSessao) {
+        sessaoService.excluir(idSessao);
     }
 
 }
