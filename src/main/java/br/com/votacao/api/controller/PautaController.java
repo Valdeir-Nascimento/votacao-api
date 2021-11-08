@@ -46,7 +46,7 @@ public class PautaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(pautaDTOConverter.to(pauta));
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{idPauta}")
     public void excluir(@PathVariable Long idPauta) {
         pautaService.excluir(idPauta);

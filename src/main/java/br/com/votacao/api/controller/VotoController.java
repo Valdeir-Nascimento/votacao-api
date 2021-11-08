@@ -6,10 +6,7 @@ import br.com.votacao.api.model.Voto;
 import br.com.votacao.api.service.VotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,9 @@ public class VotoController {
         return ResponseEntity.ok().body(votoDTOConverter.to(voto));
     }
 
+    @DeleteMapping("/sessoes/votos/{idVoto}")
+    public void excluir(@PathVariable Long idVoto) {
+        votoService.excluir(idVoto);
+    }
 
 }
