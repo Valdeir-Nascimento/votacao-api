@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/pautas/")
+@RequestMapping(value = "/v1/pautas")
 public class SessaoController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class SessaoController {
         return ResponseEntity.ok().body(sessaoDTOConverter.toList(sessaoList));
     }
 
-    @GetMapping("/{idSessao}")
+    @GetMapping("/sessoes/{idSessao}")
     public ResponseEntity<SessaoDTO> findById(@PathVariable Long idSessao) {
         Sessao sessao = sessaoService.buscar(idSessao);
         return ResponseEntity.ok().body(sessaoDTOConverter.to(sessao));
@@ -56,7 +56,4 @@ public class SessaoController {
     public void excluir(@PathVariable Long idSessao) {
         sessaoService.excluir(idSessao);
     }
-
-
-
 }
