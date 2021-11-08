@@ -19,7 +19,7 @@ public class SessaoService {
     private PautaService pautaService;
 
     @Transactional(readOnly = true)
-    public List<Sessao> findAll() {
+    public List<Sessao> listar() {
         return sessaoRepository.findAll();
     }
 
