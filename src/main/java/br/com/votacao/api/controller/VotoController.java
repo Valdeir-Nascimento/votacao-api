@@ -38,6 +38,12 @@ public class VotoController {
         return ResponseEntity.ok().body(votoDTOConverter.to(voto));
     }
 
+    @GetMapping("/{idPauta}/sessoes/votos")
+    public ResponseEntity<List<VotoDTO>> buscarVotosPorSessao(@PathVariable Long idPauta) {
+        List<Voto> votos = votoService.buscarVotosPorPauta(idPauta);
+        return ResponseEntity.ok().body(votoDTOConverter.toList(votos));
+    }
+
     @PostMapping("/{idPauta}/sessoes/votos")
     public ResponseEntity<VotoDTO> criarVoto(
             @PathVariable Long idPauta,
