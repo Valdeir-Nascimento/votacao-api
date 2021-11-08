@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,7 +39,7 @@ public class SessaoController {
     }
 
     @PostMapping("/{idPauta}/sessoes")
-    public ResponseEntity<SessaoDTO> criarSessao(@PathVariable Long idPauta, @RequestBody SessaoDTO sessaoDTO, HttpServletResponse response) {
+    public ResponseEntity<SessaoDTO> criarSessao(@PathVariable Long idPauta, @RequestBody @Valid SessaoDTO sessaoDTO, HttpServletResponse response) {
         Sessao sessao = sessaoDTOConverter.to(sessaoDTO);
         sessao = sessaoService.criarSessao(idPauta, sessao);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, sessao.getId()));

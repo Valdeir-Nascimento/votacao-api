@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,7 +39,7 @@ public class PautaController {
     }
 
     @PostMapping
-    public ResponseEntity<PautaDTO> create(@RequestBody PautaDTO pautaDTO, HttpServletResponse response) {
+    public ResponseEntity<PautaDTO> create(@Valid @RequestBody PautaDTO pautaDTO, HttpServletResponse response) {
         Pauta pauta = pautaDTOConverter.to(pautaDTO);
         pauta = pautaService.salvar(pauta);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, pauta.getId()));
