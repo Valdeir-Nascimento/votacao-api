@@ -5,7 +5,6 @@ import br.com.votacao.api.exception.*;
 import br.com.votacao.api.model.Sessao;
 import br.com.votacao.api.model.Voto;
 import br.com.votacao.api.repository.VotoRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import static br.com.votacao.api.util.MessagesUtil.CPF_UNABLE_TO_VOTE;
 
-@RequiredArgsConstructor
 @Service
 public class VotoService {
 
@@ -28,10 +26,11 @@ public class VotoService {
     @Autowired
     private SessaoService sessaoService;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Value("${url.validar.cpf}")
     private String validarCPF;
-
-    private final RestTemplate restTemplate;
 
     public List<Voto> listar() {
         return votoRepository.findAll();
