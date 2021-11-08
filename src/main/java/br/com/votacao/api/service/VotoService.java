@@ -41,10 +41,10 @@ public class VotoService {
                 .orElseThrow(() -> new PautaNaoEncontradaException(idVoto));
     }
 
-    public List<Voto> buscarVotosPorPauta(Long id) {
-        var votos = votoRepository.findByPautaId(id);
+    public List<Voto> buscarVotosPorPauta(Long idPauta) {
+        var votos = votoRepository.findByPautaId(idPauta);
         if (!votos.isPresent()) {
-            throw new VotoNaoEncontradoException(id);
+            throw new VotoNaoEncontradoException(idPauta);
         }
         return votos.get();
     }
