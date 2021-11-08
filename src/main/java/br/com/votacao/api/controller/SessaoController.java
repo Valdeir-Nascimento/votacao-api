@@ -37,12 +37,18 @@ public class SessaoController {
         return ResponseEntity.ok().body(sessaoDTOConverter.to(sessao));
     }
 
-    @GetMapping("/{idPauta}/sessoes")
+    @PostMapping("/{idPauta}/sessoes")
     public ResponseEntity<SessaoDTO> criarSessao(@PathVariable Long idPauta, @RequestBody SessaoDTO sessaoDTO, HttpServletResponse response) {
         Sessao sessao = sessaoDTOConverter.to(sessaoDTO);
         sessao = sessaoService.criarSessao(idPauta, sessao);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, sessao.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(sessaoDTOConverter.to(sessao));
+    }
+
+    @GetMapping("/{idPauta}/sessoes/{idSessao}")
+    public ResponseEntity<SessaoDTO> buscarSessaoPorPauta(@PathVariable Long idPauta, @PathVariable Long idSessao) {
+        Sessao sessao = sessaoService.buscarSessaoPorPauta(idSessao, idPauta);
+        return ResponseEntity.ok().body(sessaoDTOConverter.to(sessao));
     }
 
     @DeleteMapping("/sessoes/{idSessao}")
