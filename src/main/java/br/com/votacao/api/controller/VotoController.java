@@ -28,7 +28,11 @@ public class VotoController {
         return ResponseEntity.ok().body(votoDTOConverter.toList(votos));
     }
 
-
+    @GetMapping("/sessoes/votos/{idVoto}")
+    public ResponseEntity<VotoDTO> findById(@PathVariable Long idVoto) {
+        Voto voto = votoService.buscar(idVoto);
+        return ResponseEntity.ok().body(votoDTOConverter.to(voto));
+    }
 
 
 }
