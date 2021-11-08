@@ -28,6 +28,10 @@ public class SessaoController {
         return ResponseEntity.ok().body(sessaoDTOConverter.toList(sessaoList));
     }
 
-
+    @GetMapping("/{idSessao}")
+    public ResponseEntity<SessaoDTO> findById(@PathVariable Long idSessao) {
+        Sessao sessao = sessaoService.buscar(idSessao);
+        return ResponseEntity.ok().body(sessaoDTOConverter.to(sessao));
+    }
 
 }
