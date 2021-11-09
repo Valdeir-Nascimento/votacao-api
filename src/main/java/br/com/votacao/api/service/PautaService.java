@@ -1,9 +1,13 @@
 package br.com.votacao.api.service;
 
+import br.com.votacao.api.exception.EntidadeEmUsoException;
 import br.com.votacao.api.exception.PautaNaoEncontradaException;
 import br.com.votacao.api.model.Pauta;
 import br.com.votacao.api.repository.PautaRepository;
+import br.com.votacao.api.util.MessagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +35,14 @@ public class PautaService {
     }
 
     public void excluir(Long idPauta) {
-        pautaRepository.deleteById(idPauta);
+        try {
+            pautaRepository.deleteById(idPauta);
+            pautaRepository.flush();
+        } catch (EmptyResultDataAccessException e) {
+            throw new PautaNaoEncontradaException(idPauta);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoException(String.format(MessagesUtil.MSG_ENTIDADE_EM_USO, idPauta));
+        }
     }
 
 }

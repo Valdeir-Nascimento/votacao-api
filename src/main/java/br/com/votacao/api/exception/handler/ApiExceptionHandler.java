@@ -1,5 +1,6 @@
 package br.com.votacao.api.exception.handler;
 
+import br.com.votacao.api.exception.EntidadeEmUsoException;
 import br.com.votacao.api.exception.EntidadeNaoEncontradaException;
 import br.com.votacao.api.exception.NegocioException;
 import org.springframework.beans.TypeMismatchException;
@@ -9,10 +10,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,15 +31,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @Autowired
     private MessageSource messageSource;
 
-    @Override
-    protected ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return ResponseEntity.status(status).headers(headers).build();
+
+    @ExceptionHandler(EntidadeEmUsoException.class)
+    public ResponseEntity<?> handleEntidadeEmUso(EntidadeEmUsoException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        ErrorType errorType = ErrorType.ENTIDADE_EM_USO;
+        String detail = ex.getMessage();
+        StandardError standardError = createStandardErrorBuild(status, errorType, detail)
+                .userMessage(detail)
+                .build();
+        return handleExceptionInternal(ex, standardError, new HttpHeaders(), status, request);
     }
 
-    @Override
-    protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return handleValidationInternal(ex, ex.getBindingResult(), headers, status, request);
-    }
 
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
     public ResponseEntity<?> handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException ex, WebRequest request) {
@@ -69,8 +71,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleTypeMismatch(ex, headers, status, request);
     }
 
-    public ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex, HttpHeaders headers,
-                                                                   HttpStatus status, WebRequest request) {
+    public ResponseEntity<Object> handleMethodArgumentTypeMismatch(
+            MethodArgumentTypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         ErrorType errorType = ErrorType.PARAMETRO_INVALIDO;
         String detail = String.format("O parâmetro de URL '%s' recebeu o valor '%s', "
                         + "que é de um tipo inválido. Corrija e informe um valor compatível com o tipo %s.",
@@ -91,8 +93,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ResponseEntity<Object> handleValidationInternal(
-            Exception ex, BindingResult bindingResult, HttpHeaders headers, HttpStatus status,
-            WebRequest request) {
+            Exception ex, BindingResult bindingResult, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
         ErrorType errorType = ErrorType.DADOS_INVALIDOS;
         String detail = MSG_DADOS_INVALIDOS;
