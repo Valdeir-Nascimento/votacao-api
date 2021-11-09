@@ -9,7 +9,9 @@ import java.util.Optional;
 public interface SessaoRepository extends JpaRepository<Sessao, Long> {
 
     Optional<List<Sessao>> findByPautaId(Long id);
+
     Optional<Sessao> findByIdAndPautaId(Long idSessao, Long idPauta);
 
+    Integer countByPautaId(Long id);
 
 }

@@ -17,7 +17,7 @@ public class SessaoDTO {
     private LocalDateTime dataInicio;
 
 
-    @Min(value = 30)
+    @Min(value = 20)
     @Positive
     @NotNull(message = "Campo minutos é obrigatório")
     private Long minutos;
