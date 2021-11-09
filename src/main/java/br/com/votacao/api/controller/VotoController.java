@@ -5,6 +5,8 @@ import br.com.votacao.api.dto.converter.VotoDTOConverter;
 import br.com.votacao.api.event.RecursoCriadoEvent;
 import br.com.votacao.api.model.Voto;
 import br.com.votacao.api.service.VotoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/v1/pautas")
+@Api(value = "Voto")
 public class VotoController {
 
     @Autowired
@@ -26,24 +29,28 @@ public class VotoController {
     @Autowired
     private ApplicationEventPublisher publisher;
 
+    @ApiOperation(value = "Listar Votos")
     @GetMapping("/sessoes/votos")
     public ResponseEntity<List<VotoDTO>> listar() {
         List<Voto> votos = votoService.listar();
         return ResponseEntity.ok().body(votoDTOConverter.toList(votos));
     }
 
+    @ApiOperation(value = "Buscar Voto por ID")
     @GetMapping("/sessoes/votos/{idVoto}")
     public ResponseEntity<VotoDTO> findById(@PathVariable Long idVoto) {
         Voto voto = votoService.buscar(idVoto);
         return ResponseEntity.ok().body(votoDTOConverter.to(voto));
     }
 
+    @ApiOperation(value = "Buscar Voto por Sessão")
     @GetMapping("/{idPauta}/sessoes/votos")
     public ResponseEntity<List<VotoDTO>> buscarVotosPorSessao(@PathVariable Long idPauta) {
         List<Voto> votos = votoService.buscarVotosPorPauta(idPauta);
         return ResponseEntity.ok().body(votoDTOConverter.toList(votos));
     }
 
+    @ApiOperation(value = "Salvar Voto")
     @PostMapping("/{idPauta}/sessoes/votos")
     public ResponseEntity<VotoDTO> criarVoto(
             @PathVariable Long idPauta,
@@ -55,6 +62,7 @@ public class VotoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(votoDTOConverter.to(voto));
     }
 
+    @ApiOperation(value = "Remover Voto por ID")
     @DeleteMapping("/sessoes/votos/{idVoto}")
     public void excluir(@PathVariable Long idVoto) {
         votoService.excluir(idVoto);
