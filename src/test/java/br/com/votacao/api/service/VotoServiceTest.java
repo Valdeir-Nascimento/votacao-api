@@ -24,6 +24,8 @@ import static io.restassured.RestAssured.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class VotoServiceTest {
 
+    private static final int ID_VOTO_INEXISTENTE = 100;
+
     @LocalServerPort
     private int port;
     @Autowired
@@ -40,6 +42,7 @@ public class VotoServiceTest {
         enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
         basePath = "/v1/pautas/sessoes/votos";
+
     }
 
     @Test
@@ -52,6 +55,26 @@ public class VotoServiceTest {
                 .statusCode(HttpStatus.OK.value());
     }
 
+    @Test
+    public void deveRetornarStatus404_QuandoConsultarVotoInexistente() {
+        given()
+                .pathParam("votoId", ID_VOTO_INEXISTENTE)
+                .accept(ContentType.JSON)
+                .when()
+                .get("/{votoId}")
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
 
+    @Test
+    public void deveRetornaStatus200_QuandoExcluirVotoPorId() {
+        given()
+                .pathParam("votoId", 1L)
+                .accept(ContentType.JSON)
+                .when()
+                .delete("/{votoId}")
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
 
 }
