@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class TopicoVotacaoService {
+public class ResultadoVotacaoService {
 
     @Autowired
     private VotoRepository votoRepository;
