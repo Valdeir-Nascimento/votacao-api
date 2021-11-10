@@ -64,6 +64,7 @@ public class VotoController {
 
     @ApiOperation(value = "Remover Voto por ID")
     @DeleteMapping("/sessoes/votos/{idVoto}")
+    @ResponseStatus(HttpStatus.OK)
     public void excluir(@PathVariable Long idVoto) {
         votoService.excluir(idVoto);
     }

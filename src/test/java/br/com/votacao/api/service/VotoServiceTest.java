@@ -1,10 +1,15 @@
 package br.com.votacao.api.service;
 
+import br.com.votacao.api.model.Pauta;
+import br.com.votacao.api.model.Voto;
+import br.com.votacao.api.repository.PautaRepository;
+import br.com.votacao.api.repository.VotoRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -22,12 +27,20 @@ public class VotoServiceTest {
 
     @LocalServerPort
     private int port;
+    @Autowired
+    private PautaRepository pautaRepository;
+    @Autowired
+    private VotoRepository votoRepository;
+
+    private Voto voto;
+
 
     @Before
     public void setup() {
         enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
         basePath = "/v1/pautas/sessoes/votos";
+        prepararDados();
     }
 
     @Test
@@ -54,12 +67,23 @@ public class VotoServiceTest {
     @Test
     public void deveRetornaStatus200_QuandoExcluirVotoPorId() {
         given()
-                .pathParam("votoId", 1L)
+                .pathParam("votoId", voto.getId())
                 .accept(ContentType.JSON)
                 .when()
                 .delete("/{votoId}")
                 .then()
-                .statusCode(HttpStatus.NOT_FOUND.value());
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    public void prepararDados() {
+        Pauta pauta = new Pauta(1L, "Recurso Eleitoral");
+        pautaRepository.save(pauta);
+        voto = new Voto();
+        voto.setCpf("43090690020");
+        voto.setEscolha(true);
+        voto.setPauta(pauta);
+
+        votoRepository.save(voto);
     }
 
 }

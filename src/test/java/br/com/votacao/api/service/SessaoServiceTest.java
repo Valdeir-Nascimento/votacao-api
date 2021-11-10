@@ -65,7 +65,7 @@ public class SessaoServiceTest {
                 .when()
                 .get("/{votoId}")
                 .then()
-                .statusCode(HttpStatus.NOT_FOUND.value());
+                .statusCode(HttpStatus.OK.value());
     }
 
     @Test
