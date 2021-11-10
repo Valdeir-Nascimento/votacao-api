@@ -7,6 +7,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.BeforeClass;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,6 @@ public class PautaServiceTest {
     @LocalServerPort
     private int port;
 
-
     @Autowired
     private PautaRepository pautaRepository;
 
@@ -39,7 +40,7 @@ public class PautaServiceTest {
     @Before
     public void setup() {
         enableLoggingOfRequestAndResponseIfValidationFails();
-        RestAssured.port=8081;
+        RestAssured.port=port;
         basePath="/v1/pautas";
         jsonPautaCorreto = ResourceUtil.getContentFromResource("/json/correto/pauta.json");
 
