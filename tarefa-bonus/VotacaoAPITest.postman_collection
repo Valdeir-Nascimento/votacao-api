@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "cf840f19-8711-45f9-ba42-dfb78a2f7f11",
+		"name": "VotacaoAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pauta",
+			"item": [
+				{
+					"name": "Pautas - Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pautas - Buscar Por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/v1/pautas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pautas - Excluir Por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pautas - Criar Nova Pauta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Pauta de Teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/v1/pautas",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sessão",
+			"item": [
+				{
+					"name": "Sessao - Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas/sessoes",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"sessoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sessao - Buscar Por Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas/sessoes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"sessoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sessao - Excluir Por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas/sessoes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"sessoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sessao - Buscar Por Sessão por Pauta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas/2/sessoes/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"2",
+								"sessoes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sessao - Criar Sessão na Pauta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"minutos\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/v1/pautas/1/sessoes",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"1",
+								"sessoes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Voto",
+			"item": [
+				{
+					"name": "Voto - Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas/sessoes/votos",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"sessoes",
+								"votos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Voto - Buscar Por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas/sessoes/votos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"sessoes",
+								"votos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Voto - Excluir Por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas/sessoes/votos/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"sessoes",
+								"votos",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Voto - Salvar Voto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"cpf\": \"83048675086\",\r\n    \"escolha\": true\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/v1/pautas/2/sessoes/2/votos",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"2",
+								"sessoes",
+								"2",
+								"votos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Voto - Buscar Voto Por Pauta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas/1/sessoes/votos",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"1",
+								"sessoes",
+								"votos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resultado Votação",
+			"item": [
+				{
+					"name": "Resultado - Buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/v1/pautas/1/resultado",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"v1",
+								"pautas",
+								"1",
+								"resultado"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
