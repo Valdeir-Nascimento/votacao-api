@@ -15,7 +15,7 @@ public enum ErrorType {
     private String uri;
 
     ErrorType(String path, String uri) {
-        this.uri = "https://votacao.com.br" + path;
+        this.uri = "https://api.votacao.com.br" + path;
         this.title = uri;
     }
 }

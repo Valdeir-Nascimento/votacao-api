@@ -3,7 +3,7 @@ package br.com.votacao.api.service;
 import br.com.votacao.api.dto.PautaDTO;
 import br.com.votacao.api.dto.VotacaoDTO;
 import br.com.votacao.api.dto.converter.PautaDTOConverter;
-import br.com.votacao.api.exception.VotoNaoEncontradoException;
+import br.com.votacao.api.exception.PautaNaoEncontradaException;
 import br.com.votacao.api.exception.VotoRegistradoException;
 import br.com.votacao.api.model.Voto;
 import br.com.votacao.api.repository.SessaoRepository;
@@ -36,7 +36,7 @@ public class ResultadoVotacaoService {
     private VotacaoDTO getVotacaoPauta(Long id) {
         var votosNaPauta = votoRepository.findByPautaId(id);
         if (!votosNaPauta.isPresent() || votosNaPauta.get().isEmpty()) {
-            throw new VotoNaoEncontradoException(id);
+            throw new PautaNaoEncontradaException(id);
         }
 
         PautaDTO pauta = pautaDTOConverter.to(votosNaPauta.get().iterator().next().getPauta());

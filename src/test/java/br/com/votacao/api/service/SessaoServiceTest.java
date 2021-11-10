@@ -2,13 +2,10 @@ package br.com.votacao.api.service;
 
 import br.com.votacao.api.model.Pauta;
 import br.com.votacao.api.model.Sessao;
-import br.com.votacao.api.model.Voto;
 import br.com.votacao.api.repository.PautaRepository;
 import br.com.votacao.api.repository.SessaoRepository;
-import br.com.votacao.api.repository.VotoRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

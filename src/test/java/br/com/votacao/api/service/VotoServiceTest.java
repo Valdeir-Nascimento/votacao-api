@@ -1,16 +1,10 @@
 package br.com.votacao.api.service;
 
-import br.com.votacao.api.model.Pauta;
-import br.com.votacao.api.model.Voto;
-import br.com.votacao.api.repository.PautaRepository;
-import br.com.votacao.api.repository.VotoRepository;
-import br.com.votacao.api.util.ResourceUtil;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -28,21 +22,12 @@ public class VotoServiceTest {
 
     @LocalServerPort
     private int port;
-    @Autowired
-    private VotoRepository votoRepository;
-    @Autowired
-    private PautaRepository pautaRepository;
-
-    private Pauta pauta;
-    private Voto voto;
-    private String jsonCadastrarVotoCorreto;
 
     @Before
     public void setup() {
         enableLoggingOfRequestAndResponseIfValidationFails();
         RestAssured.port = port;
         basePath = "/v1/pautas/sessoes/votos";
-
     }
 
     @Test
