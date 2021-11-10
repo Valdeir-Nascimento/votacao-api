@@ -9,6 +9,6 @@ public class PautaNaoEncontradaException extends EntidadeNaoEncontradaException 
     }
 
     public PautaNaoEncontradaException(Long idPauta) {
-        this(String.format("Não existe um cadastro de pauta com Id %d", idPauta));
+        this(String.format("Não existe cadastro de pauta com Id: %d", idPauta));
     }
 }

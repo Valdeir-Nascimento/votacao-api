@@ -1,7 +1,6 @@
 package br.com.votacao.api.service;
 
 import br.com.votacao.api.exception.EntidadeEmUsoException;
-import br.com.votacao.api.exception.PautaNaoEncontradaException;
 import br.com.votacao.api.exception.SessaoNaoEncontradaException;
 import br.com.votacao.api.model.Pauta;
 import br.com.votacao.api.model.Sessao;

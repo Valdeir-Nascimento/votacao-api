@@ -45,13 +45,13 @@ public class VotoController {
 
     @ApiOperation(value = "Buscar Voto por Sessão")
     @GetMapping("/{idPauta}/sessoes/votos")
-    public ResponseEntity<List<VotoDTO>> buscarVotosPorSessao(@PathVariable Long idPauta) {
+    public ResponseEntity<List<VotoDTO>> buscarVotosPorPauta(@PathVariable Long idPauta) {
         List<Voto> votos = votoService.buscarVotosPorPauta(idPauta);
         return ResponseEntity.ok().body(votoDTOConverter.toList(votos));
     }
 
     @ApiOperation(value = "Salvar Voto")
-    @PostMapping("/{idPauta}/sessoes/votos")
+    @PostMapping("/{idPauta}/sessoes/{idSessao}/votos")
     public ResponseEntity<VotoDTO> criarVoto(
             @PathVariable Long idPauta,
             @PathVariable Long idSessao,

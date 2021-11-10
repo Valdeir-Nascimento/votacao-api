@@ -38,13 +38,13 @@ public class VotoService {
     public Voto buscar(Long idVoto) {
         return votoRepository
                 .findById(idVoto)
-                .orElseThrow(() -> new PautaNaoEncontradaException(idVoto));
+                .orElseThrow(() -> new VotoNaoEncontradoException(idVoto));
     }
 
     public List<Voto> buscarVotosPorPauta(Long idPauta) {
         var votos = votoRepository.findByPautaId(idPauta);
         if (!votos.isPresent()) {
-            throw new VotoNaoEncontradoException(idPauta);
+            throw new PautaNaoEncontradaException(idPauta);
         }
         return votos.get();
     }
@@ -61,11 +61,12 @@ public class VotoService {
 
     public Voto salvarVoto(Long idPauta, Long idSessao, Voto voto) {
         Sessao sessaoAtual = sessaoService.buscarSessaoPorPauta(idSessao, idPauta);
-        if (idPauta.equals(sessaoAtual.getPauta().getId())) {
+        if (!idPauta.equals(sessaoAtual.getPauta().getId())) {
             throw new SessaoInvalidaException("Sessão Inválida");
         }
         voto.setPauta(sessaoAtual.getPauta());
-        getValidarVoto(voto);
+        getValidarCpfNaVotacao(voto);
+
         return votoRepository.save(voto);
     }
 
@@ -81,7 +82,7 @@ public class VotoService {
             throw new SessaoFinalizadaException(sessao.getId());
         }
 
-        getValidarCPF(voto);
+        getValidarCpfNaVotacao(voto);
         jaVotou(voto);
     }
 
@@ -92,7 +93,7 @@ public class VotoService {
         }
     }
 
-    protected void getValidarVoto(Voto voto) {
+    protected void getValidarCpfNaVotacao(Voto voto) {
         var cpf = getValidarCPF(voto);
         if (HttpStatus.OK.equals(cpf.getStatusCode())) {
             if (CPF_UNABLE_TO_VOTE.equalsIgnoreCase(cpf.getBody().getStatus())) {
