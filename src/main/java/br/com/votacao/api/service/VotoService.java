@@ -2,12 +2,14 @@ package br.com.votacao.api.service;
 
 import br.com.votacao.api.dto.StatusCpfDTO;
 import br.com.votacao.api.exception.*;
-import br.com.votacao.api.model.Pauta;
 import br.com.votacao.api.model.Sessao;
 import br.com.votacao.api.model.Voto;
 import br.com.votacao.api.repository.VotoRepository;
+import br.com.votacao.api.util.MessagesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -50,7 +52,14 @@ public class VotoService {
     }
 
     public void excluir(Long idVoto) {
-        votoRepository.deleteById(idVoto);
+        try {
+            votoRepository.deleteById(idVoto);
+            votoRepository.flush();
+        } catch (EmptyResultDataAccessException e) {
+            throw new VotoNaoEncontradoException(idVoto);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoException(String.format(MessagesUtil.MSG_ENTIDADE_EM_USO, idVoto));
+        }
     }
 
     public List<Voto> obterVotosPorPauta(Long id) {
@@ -78,7 +87,6 @@ public class VotoService {
     protected void getVarificarVoto(Sessao sessao, Voto voto) {
         var dataLimite = sessao.getDataInicio().plusMinutes(sessao.getMinutos());
         if (LocalDateTime.now().isAfter(dataLimite)) {
-            //TODO: Enviar Menssagem
             throw new SessaoFinalizadaException(sessao.getId());
         }
 
